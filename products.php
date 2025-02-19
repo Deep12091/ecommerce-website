@@ -24,7 +24,7 @@
 
 
             //2. return number of products
-            $stmt1 = $conn->prepare("SELECT COUNT(*) As total_records FROM orders");
+            $stmt1 = $conn->prepare("SELECT COUNT(*) As total_records FROM products");
             $stmt1->execute();
             $stmt1->bind_result($total_records);
             $stmt1->store_result();
@@ -47,9 +47,9 @@
 
             //4. get all products
 
-            $stmt2 = $conn->prepare("SELECT * FROM orders LIMIT $offset,$total_records_per_page");
+            $stmt2 = $conn->prepare("SELECT * FROM products LIMIT $offset,$total_records_per_page");
             $stmt2->execute();
-            $orders = $stmt2->get_result();
+            $products = $stmt2->get_result();
 
 
 
@@ -73,52 +73,72 @@
         </div>
 
 
-    <h2>Orders</h2>
-
-             <?php if(isset($_GET['order_updated'])){ ?>
-                <p class="text-center" style="color: green;"><?php echo $_GET['order_updated']; ?></p>
+    <h2>Products</h2>
+            <?php if(isset($_GET['edit_success_message'])){ ?>
+                <p class="text-center" style="color: green;"><?php echo $_GET['edit_success_message']; ?></p>
             <?php }?>
             
-            <?php if(isset($_GET['order_failed'])){ ?>
-                <p class="text-center" style="color: red;"><?php echo $_GET['order_failed']; ?></p>
+            <?php if(isset($_GET['edit_failure_message'])){ ?>
+                <p class="text-center" style="color: red;"><?php echo $_GET['edit_failure_message']; ?></p>
+            <?php }?>
+
+            <?php if(isset($_GET['deleted_failure'])){ ?>
+                <p class="text-center" style="color: red;"><?php echo $_GET['deleted_failure']; ?></p>
             <?php }?>
 
             <?php if(isset($_GET['deleted_successfully'])){ ?>
                 <p class="text-center" style="color: green;"><?php echo $_GET['deleted_successfully']; ?></p>
             <?php }?>
-            
-            <?php if(isset($_GET['deleted_failure'])){ ?>
-                <p class="text-center" style="color: red;"><?php echo $_GET['deleted_failure']; ?></p>
+
+            <?php if(isset($_GET['product_failed'])){ ?>
+                <p class="text-center" style="color: red;"><?php echo $_GET['product_failed']; ?></p>
             <?php }?>
 
+            <?php if(isset($_GET['product_created'])){ ?>
+                <p class="text-center" style="color: green;"><?php echo $_GET['product_created']; ?></p>
+            <?php }?>
 
+            <?php if(isset($_GET['images_failed'])){ ?>
+                <p class="text-center" style="color: red;"><?php echo $_GET['images_failed']; ?></p>
+            <?php }?>
 
+            <?php if(isset($_GET['images_updated'])){ ?>
+                <p class="text-center" style="color: green;"><?php echo $_GET['images_updated']; ?></p>
+            <?php }?>
+
+    <p class="text-center"></p>
     <div class="table-responsive">
         <table class="table table-striped table-sm ">
             <thead>
                 <tr>
-                    <th scope="col">Order Id</th>
-                    <th scope="col">Order Status</th>
-                    <th scope="col">User Id</th>
-                    <th scope="col">Order Date</th>
-                    <th scope="col">Phone</th>
-                    <th scope="col">Address</th>
+                    <th scope="col">Product Id</th>
+                    <th scope="col">Product Image</th>
+                    <th scope="col">Product Name</th>
+                    <th scope="col">Product Price</th>
+                    <th scope="col">Product Offer</th>
+                    <th scope="col">Product Category</th>
+                    <th scope="col">Product Colour</th>
+					<th scope="col">Product Size</th>
+                    <th scope="col">Edit Images</th>
                     <th scope="col">Edit</th>
                     <th scope="col">Delete</th>
                 </tr>
             </thead>
             <tbody>
 
-                <?php foreach($orders as $order){?>
+                <?php foreach($products as $product){?>
                 <tr>
-                    <td><?php echo $order['order_id']; ?></td>
-                    <td><?php echo $order['order_status']; ?></td>
-                    <td><?php echo $order['user_id']; ?></td>
-                    <td><?php echo $order['order_date']; ?></td>
-                    <td><?php echo $order['user_phone']; ?></td>
-                    <td><?php echo $order['user_address']; ?></td>
-                    <td><a class="btn btn-primary" href="edit_order.php?order_id=<?php echo $order['order_id']; ?>">Edit</a></td>
-                    <td><a class="btn btn-danger" href="delete_order.php?order_id=<?php echo $order['order_id']; ?>">Delete</a></td>
+                    <td><?php echo $product['product_id']; ?></td>
+                    <td><img src="<?php echo "../assets/imgs/". $product['product_image']; ?>" style="width:70px; height:70px"/></td>
+                    <td><?php echo $product['product_name']; ?></td>
+                    <td><?php echo "RS.". $product['product_price']; ?></td>
+                    <td><?php echo $product['product_special_offer'] ."%"; ?></td>
+                    <td><?php echo $product['product_category']; ?></td>
+                    <td><?php echo $product['product_color']; ?></td>
+                    <td><?php echo $product['product_size']; ?></td>
+                    <td><a class="btn btn-warning" href="<?php echo "edit_images.php?product_id=". $product['product_id']."&product_name=".$product['product_name']; ?>">Edit Images</a></td>
+                    <td><a class="btn btn-primary" href="edit_product.php?product_id=<?php echo $product['product_id']; ?>">Edit</a></td>
+                    <td><a class="btn btn-danger" href="delete_product.php?product_id=<?php echo $product['product_id']; ?>">Delete</a></td>
                 </tr>
                 
                 <?php }?>

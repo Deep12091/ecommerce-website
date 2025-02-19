@@ -19,7 +19,7 @@
 
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3  border-bottom">
-            <h1 class="h2">Admin Account</h2>
+            <h1 class="h2">Help</h2>
             <div class="btn-toolbar mb-2 mb-md-0">
                 <div class="btn-group me-2">
 
@@ -29,9 +29,20 @@
         </div>
 
         <div class="container">
-            <p>ID : <?php echo $_SESSION['admin_id']; ?></p>
-            <p>Name : <?php echo $_SESSION['admin_name']; ?></p>
-            <p>Email : <?php echo $_SESSION['admin_email']; ?></p>
+
+        <h3>Contact Us</h3>
+			<hr class="mx-auto">
+			<p class="w-50 mx-auto">
+				<i class="fas fa-phone"><span>1800 049 888</span></i>
+			</p>
+			<p class="w-50 mx-auto">
+				<i class="fas fa-envelope"><span>admin@gmail.com</span></i>
+			</p>
+			<p class="w-50 mx-auto">
+				we work 24/7 to answer your Questions
+			</p>
+
+
         </div>
 
 
